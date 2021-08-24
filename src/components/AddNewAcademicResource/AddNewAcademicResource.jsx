@@ -66,7 +66,8 @@ const AddNewAcademicResource = (props) => {
             />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
-            <FormTextArea style={{ width: '520px', height: '110px' }}
+            <FormTextArea
+              style={{ width: '520px', height: '110px' }}
               placeholder='Descripción del recurso'
               name='description'
               value={description}
@@ -118,8 +119,8 @@ const AddNewAcademicResource = (props) => {
           </div>
           <Button4 style={{ margin: 'auto' }} type='submit' onClick={handleSubmit} disabled={loaded}>Agregar recurso Academico</Button4>
         </div>
-      </FormModal >
-    </div >
+      </FormModal>
+    </div>
   );
 };
 
