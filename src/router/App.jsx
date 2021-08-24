@@ -31,19 +31,15 @@ const App = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user.displayName);
         user.getIdTokenResult().then((idTokenResult) => {
           if (idTokenResult.claims.admin) {
             dispatch(login(user.uid, user.displayName, 'admin'));
-          }
-          if (idTokenResult.claims.teacher) {
+          } else if (idTokenResult.claims.teacher) {
             dispatch(login(user.uid, user.displayName, 'teacher'));
-          }
-          if (idTokenResult.claims.student) {
+          } else if (idTokenResult.claims.student) {
             dispatch(login(user.uid, user.displayName, 'student'));
           }
         });
-
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);

@@ -11,6 +11,7 @@ import {
 
 export const login = (uid, displayName, role) => async (dispatch, getState) => {
   switch (role) {
+
     case 'student':
       {
         db.collection('students')
@@ -63,12 +64,13 @@ export const login = (uid, displayName, role) => async (dispatch, getState) => {
       }
       break;
     default:
-      {
-        dispatch({
-          type: types.login,
-          payload: { uid, displayName, role },
-        });
-      }
+      alert('algo esta mal, tu usuario no esta activo');
+      // {
+      //   dispatch({
+      //     type: types.login,
+      //     payload: { uid, displayName, role },
+      //   });
+      // }
       break;
   }
 };
@@ -82,7 +84,15 @@ export const loginEmailPassword = (email, password) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        dispatch(login(user.uid, user.displayName));
+        user.getIdTokenResult().then((idTokenResult) => {
+          if (idTokenResult.claims.admin) {
+            dispatch(login(user.uid, user.displayName, 'admin'));
+          } else if (idTokenResult.claims.teacher) {
+            dispatch(login(user.uid, user.displayName, 'teacher'));
+          } else if (idTokenResult.claims.student) {
+            dispatch(login(user.uid, user.displayName, 'student'));
+          }
+        });
       })
       .catch((err) => {
         if (err.message === 'The password is invalid or the user does not have a password.') {

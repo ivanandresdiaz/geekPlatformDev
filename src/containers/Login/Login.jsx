@@ -24,12 +24,7 @@ const Login = (props) => {
     evento.preventDefault();
     dispatch(loginEmailPassword(form.name, form.password));
   };
-  const handleLoginGoogle = () => {
-    dispatch(loginGoogle());
-  };
-  const handleLoginFacebook = () => {
-    dispatch(loginFacebook());
-  };
+
   return (
     <>
       <Navbar />

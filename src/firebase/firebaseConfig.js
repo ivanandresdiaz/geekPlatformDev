@@ -5,13 +5,13 @@ import 'firebase/firebase-functions';
 import 'firebase/firebase-storage';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyDzBkmUt--NyMvYRWGtde4hOmAGXJnWOJo',
-  authDomain: 'geekplatform-dc705.firebaseapp.com',
-  projectId: 'geekplatform-dc705',
-  storageBucket: 'geekplatform-dc705.appspot.com',
-  messagingSenderId: '115896621323',
-  appId: '1:115896621323:web:0061c5b47f567d4dce2a0e',
-  measurementId: 'G-X2Z86JT0CM',
+  apiKey: 'AIzaSyD5eNxXaQWljMdf7A4pOvPYxkSMFkJkTKg',
+  authDomain: 'geekplatformdev.firebaseapp.com',
+  projectId: 'geekplatformdev',
+  storageBucket: 'geekplatformdev.appspot.com',
+  messagingSenderId: '441888046823',
+  appId: '1:441888046823:web:9508e407ae1aee94996c42',
+  measurementId: 'G-85PMMR2FGC',
 });
 
 const db = firebase.firestore();
