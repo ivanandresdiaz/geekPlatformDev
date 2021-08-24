@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: './src/index..js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -31,7 +31,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.s[ac]ss$/,
+        test: /\.(css|scss)$/,
         use: [
           'style-loader',
           'css-loader',
@@ -41,20 +41,6 @@ module.exports = {
       {
         test: /\.(png|svg|jpg)$/,
         type: 'asset/resource',
-      },
-      {
-        test: /\.(woff|woff2)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff',
-            name: '[name].[ext]',
-            outputPath: './assets/fonts/',
-            publicPath: './assets/fonts/',
-            esModule: false,
-          },
-        },
       },
     ],
   },
