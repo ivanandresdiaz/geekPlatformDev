@@ -64,7 +64,7 @@ export const authReducer = (state = initialState, action) => {
 
 export const getFullName = (state) => state.auth.fullName;
 export const getUserId = (state) => state.auth.uid;
-export const getRole = (state) => state.auth.role;
+export const getRole = (state) => state.auth.roleGeek;
 export const getPhotoURL = (state) => state.auth.photoURL;
 export const getCorteId = (state) => state.auth.corteId;
 export const getMyProyects = (state) => state.auth.myProyects;

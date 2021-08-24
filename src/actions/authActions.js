@@ -10,6 +10,7 @@ import {
 } from '../firebase/firebaseConfig';
 
 export const login = (uid, displayName, role) => async (dispatch, getState) => {
+  console.log('login', uid, displayName, role);
   switch (role) {
 
     case 'student':

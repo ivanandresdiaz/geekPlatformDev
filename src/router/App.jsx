@@ -32,11 +32,15 @@ const App = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         user.getIdTokenResult().then((idTokenResult) => {
+
           if (idTokenResult.claims.admin) {
+            console.log('admin', user.uid, user.displayName, idTokenResult.claims.admin);
             dispatch(login(user.uid, user.displayName, 'admin'));
           } else if (idTokenResult.claims.teacher) {
+            console.log('teacher', user.uid, user.displayName, idTokenResult.claims.teacher);
             dispatch(login(user.uid, user.displayName, 'teacher'));
           } else if (idTokenResult.claims.student) {
+            console.log('student', user.uid, user.displayName, idTokenResult.claims.student);
             dispatch(login(user.uid, user.displayName, 'student'));
           }
         });
