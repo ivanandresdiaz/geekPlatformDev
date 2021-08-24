@@ -24,6 +24,7 @@ import CodelingoTeacher from '../containers/CodelingoTeacher/CodelingoTeacher';
 import CreateBlog from '../containers/CreateBlog/CreateBlog';
 import BlogRead from '../containers/BlogRead/BlogRead';
 import DeliverSprint from '../containers/DeliverSprint/DeliverSprint';
+import TakeListStudents from '../containers/TakeListStudents/TakeListStudents';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,13 +35,10 @@ const App = () => {
         user.getIdTokenResult().then((idTokenResult) => {
 
           if (idTokenResult.claims.admin) {
-            console.log('admin', user.uid, user.displayName, idTokenResult.claims.admin);
             dispatch(login(user.uid, user.displayName, 'admin'));
           } else if (idTokenResult.claims.teacher) {
-            console.log('teacher', user.uid, user.displayName, idTokenResult.claims.teacher);
             dispatch(login(user.uid, user.displayName, 'teacher'));
           } else if (idTokenResult.claims.student) {
-            console.log('student', user.uid, user.displayName, idTokenResult.claims.student);
             dispatch(login(user.uid, user.displayName, 'student'));
           }
         });
@@ -86,6 +84,13 @@ const App = () => {
             component={Salon}
             isAuthenticated={isLoggedIn}
           />
+          <PrivateRoute
+            exact
+            path='/takeListStudents/:corteId'
+            component={TakeListStudents}
+            isAuthenticated={isLoggedIn}
+          />
+
           <PrivateRoute
             exact
             path='/corte/:corteId/:salon/createGroups'

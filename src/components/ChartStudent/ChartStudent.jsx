@@ -48,6 +48,15 @@ const ChartStudent = (props) => {
           }}
           options={{
             maintainAspectRatio: false,
+            scales: {
+              r: {
+                angleLines: {
+                  display: false,
+                },
+                suggestedMin: 0,
+                suggestedMax: 100,
+              },
+            },
             elements: {
               line: {
                 borderWidth: 3,

@@ -21,15 +21,22 @@ import { getCorteDataDetails } from '../../reducers/salonReducer';
 import { Button4, Button5 } from '../../globalStyles';
 import { getRole } from '../../reducers/authReducer';
 import NavbarTeacher from '../../components/Structure/NavbarTeacher';
+import { getFirestoreStudentsCorte } from '../../actions/studentsActions';
+import { getStudentsCorte } from '../../reducers/studentsReducer';
 
 const Corte = (props) => {
   const role = useSelector(getRole);
+  const studentsCorte = useSelector(getStudentsCorte);
   const dispatch = useDispatch();
   const corteDataDetails = useSelector(getCorteDataDetails);
   const { match: { params: { corteId } } } = props;
   useEffect(() => {
     dispatch(getFirestoreCorteDataDetails(corteId));
+    if (!(studentsCorte.length > 0)) {
+      dispatch(getFirestoreStudentsCorte(corteId));
+    }
   }, []);
+
   const handleRequestWeekStudent = () => {
     dispatch(requestWeekStudent(corteId));
   };
@@ -142,13 +149,16 @@ const Corte = (props) => {
                 <Calendar corteId={corteId} />
               </ContainerWrap2Corte>
             </ContainerWrapCorte>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <Link to={`/takeListStudents/${corteId}`}>
+              Tomar lista estudiantes Link!!!
+            </Link>
+            {/* <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ width: '100%' }}>
                 <ContainerStudentLista>
                   <ListarStudentsCorte corteId={corteId} />
                 </ContainerStudentLista>
               </div>
-            </div>
+            </div> */}
           </ContainerMainCorte>
         </div>
         <Footer />

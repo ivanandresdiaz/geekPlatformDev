@@ -13,11 +13,29 @@ import Footer from '../../components/Structure/Footer';
 import { ContainerMainSalon, ContainerRowSprint, ContainerTitleGreet } from './SalonStyles';
 import { ModalSprints, ModalSprintStandard } from '../../uiComponents/Modal/Modal';
 import { Button6 } from '../../globalStyles';
+import ChartStudent from '../../components/ChartStudent/ChartStudent';
+import { getStudentsCorte } from '../../reducers/studentsReducer';
+import { getFirestoreStudentsCorte } from '../../actions/studentsActions';
 
 const Salon = (props) => {
   const role = useSelector(getRole);
   const { match: { params: { salon, corteId } } } = props;
+  const studentsCorte = useSelector(getStudentsCorte);
   const [showModalSprints, setShowModalSprints] = useState(false);
+  const [profileSocialGeek, setProfileSocialGeek] = useState({
+    fullName: 'Promedio de salon',
+    html: [],
+    css: [],
+    javascript: [],
+    webpack: [],
+    reactJs: [],
+    reactHooks: [],
+    redux: [],
+    firebase: [],
+    testing: [],
+    sigloXXI: [],
+    designThinking: [],
+  });
   const [showModalSprintStandard, setShowModalSprintStandard] = useState(false);
   const OpenModalSprintStandard = () => { setShowModalSprintStandard((prevSprintStandard) => !prevSprintStandard); };
   const OpenModalSprints = () => { setShowModalSprints((prevSprints) => !prevSprints); };
@@ -25,11 +43,25 @@ const Salon = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFirestoreSalon(corteId, salon));
+    if (studentsCorte.length > 0) {
+      studentsCorte.forEach((item) => {
+        setProfileSocialGeek({
+          ...profileSocialGeek,
+          html: [...profileSocialGeek.html, item.html],
+          css: [...profileSocialGeek.css, item.css],
+          javascript: [...profileSocialGeek.javascript, item.javascript],
+          webpack: [...profileSocialGeek.webpack, item.webpack],
+          reactJs: [...profileSocialGeek.reactJs, item.reactJs],
+          reactHooks: [...profileSocialGeek.reactHooks, item.reactHooks],
+          redux: [...profileSocialGeek.redux, item.redux],
+          firebase: [...profileSocialGeek.firebase, item.firebase],
+          testing: [...profileSocialGeek.testing, item.testing],
+          designThinking: [...profileSocialGeek.designThinking, item.designThinking],
+        });
+      });
+      // setProfileSocialGeek(classAverage);
+    }
   }, []);
-  if (salonData.length > 0) {
-    const sprintsArray = Object.keys(salonData.sprints);
-    console.log(sprintsArray);
-  }
   return (
     <>
       {role === 'teacher' && (
@@ -78,7 +110,10 @@ const Salon = (props) => {
       </ContainerMainSalon>
       <ContainerMainSalon>
         <ListarWorkGroups corteId={corteId} salonId={salon} />
-
+      </ContainerMainSalon>
+      <ContainerMainSalon>
+        <h3>Promedio del salon</h3>
+        <ChartStudent profileSocialGeek={profileSocialGeek} />
       </ContainerMainSalon>
       <Footer />
     </>

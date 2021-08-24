@@ -9,10 +9,11 @@ import { ModalEstudiantes } from '../Modal/Modal';
 import { getRole } from '../../reducers/authReducer';
 
 const ListarStudentsCorte = (props) => {
+  const { corteId, handleShowDataStudent } = props;
   const role = useSelector(getRole);
   const [showModalE, setShowModalE] = useState(false);
   const OpenModalE = () => { setShowModalE((prevE) => !prevE); };
-  const { corteId } = props;
+
   const dispatch = useDispatch();
   const studentsCorte = useSelector(getStudentsCorte);
   let dataListStudents = {};
@@ -59,7 +60,6 @@ const ListarStudentsCorte = (props) => {
     const listaEnviar = Object.entries(preparacionLista).map((item) => item[1]);
     dispatch(enviarFirestoreLista(corteId, listaEnviar));
   };
-  console.log(studentsCorte);
   return (
     <div style={{ width: '100%' }}>
       <DivContainerList>
@@ -92,7 +92,7 @@ const ListarStudentsCorte = (props) => {
             porcentajeAsistencia = 0;
           }
           return (
-            <DivRowList key={student.uid}>
+            <DivRowList key={student.uid} onClick={() => handleShowDataStudent(student)}>
               {role === 'teacher' ? (
                 <DivContainerInputCheckBox>
                   <input type='checkbox' name='assistance' onChange={(evento) => handleInputChangeCheckbox(evento, student.uid, student.assistance, student.geekyPuntos)} />
