@@ -59,7 +59,6 @@ const Salon = (props) => {
           designThinking: [...profileSocialGeek.designThinking, item.designThinking],
         });
       });
-      // setProfileSocialGeek(classAverage);
     }
   }, []);
   return (

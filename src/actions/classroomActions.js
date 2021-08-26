@@ -275,48 +275,43 @@ export const deleteFirestoreGroups = (corteId, salonId, id) => async (dispatch) 
   toast.error('Se ha eliminado el grupo');
   dispatch({ type: 'deleteFirestoreGroups', payload: id });
 };
-
-// export const uploadSprintPDF = (file) => async (dispatch, getState) => {
-//   console.log(file.name);
-//   const refStorage = firebase.storage().ref(`sprintDocs/${file.name}`);
-//   const task = refStorage.put(file);
-
-//   task.on(
-//     'state_changed',
-//     (snapshot) => {
-//       const porcentaje =
-//         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//       console.log(`porcentaje de carga ${porcentaje}`);
-//       // $('.determinate').attr('style', `width: ${porcentaje}%`);
-//     },
-//     (err) => {
-//       console.log(`Error subiendo archivo = > ${err.message}`);
-//     },
-//     () => {
-//       task.snapshot.ref
-//         .getDownloadURL()
-//         .then((url) => {
-//           dispatch({ type: 'uploadSprintPDF', payload: url });
-//           // sessionStorage.setItem('imgNewPost', url);
-//         })
-//         .catch((err) => {
-//           console.log(`Error obteniendo downloadURL = > ${err}`);
-//         });
-//     },
-//   );
-// };
-export const enviarFirestoreLista = (corteId, listaEnviar) => (dispatch, getState) => {
+export const enviarFirestoreLista = (corteId, listaEnviar, classroom, date, studentsInClass, studentsNoInClass) => (dispatch, getState) => {
   const batch = db.batch();
   listaEnviar.forEach((student) => {
-    batch.update(db.collection('students').doc(student.uid), { assistance: student.assistance, geekyPuntos: student.geekyPuntos + 1 });
+    batch.update(db.collection('students').doc(student.uid), { assistance: student.assistance, geekyPuntos: student.geekyPuntos });
   });
   batch
     .commit()
     .then(() => {
-      toast.success('Se ha tomado lista');
-      dispatch({ type: 'requestWeekStudent' });
+      const initialData = {
+        corteId,
+        date,
+        classroom,
+        studentsInClass,
+        studentsNoInClass,
+      };
+      db.collection('cortes').doc(corteId).collection('listas').add(initialData)
+        .then(() => {
+          toast.success('Se ha tomado lista');
+          // dispatch({ type: 'enviarFirestoreLista' });
+        });
+
     })
     .catch((error) => console.error(error));
+};
+export const getFirestoreReporteAsistencia = (corteId) => async (dispatch, getState) => {
+  db.collection('cortes')
+    .doc(corteId)
+    .collection('listas')
+    .get()
+    .then((snapshot) => {
+      const data = snapshot.docs.map((doc) => {
+        const dataDocument = doc.data();
+        return { ...dataDocument, id: doc.id };
+      });
+      dispatch({ type: 'getFirestoreReporteAsistencia', payload: data });
+    })
+    .catch((err) => console.log(err));
 };
 
 export const calificarSprintStudent = (sprintId, uid, values, calificacion, corteId, salonId, title) => async (dispatch, getState) => {

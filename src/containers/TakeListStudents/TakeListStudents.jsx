@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ChartStudent from '../../components/ChartStudent/ChartStudent';
 import ListarStudentsCorte from '../../uiComponents/ListarStudentsCorte/ListarStudentsCorte';
 import { getStudentsCorte } from '../../reducers/studentsReducer';
+import ListarReporteAsistencias from '../../uiComponents/ListarReporteAsistencias/ListarReporteAsistencias';
 
 const TakeListStudents = (props) => {
   const { match: { params: { corteId } } } = props;
@@ -50,6 +51,7 @@ const TakeListStudents = (props) => {
       Tomar lista de estudiantes
       <ListarStudentsCorte corteId={corteId} handleShowDataStudent={handleShowDataStudent} />
       <ChartStudent profileSocialGeek={profileSocialGeek} />
+      <ListarReporteAsistencias corteId={corteId} />
     </div>
   );
 };

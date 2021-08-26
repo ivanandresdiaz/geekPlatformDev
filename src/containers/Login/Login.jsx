@@ -40,6 +40,10 @@ const Login = (props) => {
               Contraseña
               <FormInput type='password' name='password' onChange={handleChange} />
             </LabelLogin>
+            <p>ingresa con estas credenciales</p>
+            <p>admin: administrador@gmail.com, contraseña: 123456</p>
+            <p>profesor: profesor1@gmail.com, contraseña: 123456</p>
+            <p>estudiante: estudiante1@gmail.com, contraseña: 123456</p>
             <Button2 type='submit'>Ingresar</Button2>
             <ResetPassword>¿Olvidaste tu contraseña?</ResetPassword>
           </FormLogin>

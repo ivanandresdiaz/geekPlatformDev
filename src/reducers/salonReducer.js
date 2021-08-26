@@ -5,6 +5,7 @@ const initialState = {
   sprints: [],
   allSprints: [],
   workGroups: [],
+  reporteAsistencia: [],
   loadedSprintPDF: '',
   plantillaCreatingGroups: {
     title: 'Default plantilla grupos',
@@ -116,20 +117,11 @@ export const salonReducer = (state = initialState, action) => {
           choosingWeekStudent: true,
         },
       };
-      // case 'nuevaCalificacion': {
-
-      //   const newAllSprints = state.allSprints.map((sprint) => {
-      //     if (sprint.id === action.payload.sprintId) {
-      //       return { ...sprint, calificados: action.payload.nuevosCalificados };
-      //     }
-      //     return sprint;
-      //   });
-      //   return {
-      //     ...state,
-      //     allSprints: [
-      //       ...newAllSprints,
-      //     ],
-      //   }; }
+    case 'getFirestoreReporteAsistencia':
+      return {
+        ...state,
+        reporteAsistencia: action.payload,
+      };
 
     default:
       return state;
@@ -143,4 +135,4 @@ export const getWorkGroups = (state) => state.salon.workGroups;
 export const getPlantillaCreatingGroups = (state) => state.salon.plantillaCreatingGroups;
 export const getLoadedSprintPDF = (state) => state.salon.loadedSprintPDF;
 export const getCorteDataDetails = (state) => state.salon.corteDataDetails;
-
+export const getReporteAsistencia = (state) => state.salon.reporteAsistencia;
